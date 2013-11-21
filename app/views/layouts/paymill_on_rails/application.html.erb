@@ -108,7 +108,7 @@
   <%= javascript_include_tag "https://bridge.paymill.com/", "paymill_on_rails/application", "data-turbolinks-track" => true %>
   <%= csrf_meta_tags %>
   <script type="text/javascript">
-      var PAYMILL_PUBLIC_KEY = '<%=PAYMILL_PUBLIC_KEY%>';
+      var PAYMILL_PUBLIC_KEY = '<%= PaymillOnRails.paymill_public_key %>';
   </script>
 </body>
 </html>
