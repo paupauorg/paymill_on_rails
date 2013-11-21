@@ -16,5 +16,10 @@ namespace :paymill_on_rails do
       PaymillOnRails::Plan.create paymill_id: offer.id, name: offer.name, price: offer.amount / 100.0
     end
   end
+
+  desc "Copy the views to the app"
+  task :install_views => :environment do
+    system 'rails g paymill_on_rails:views'
+  end
 end
 
