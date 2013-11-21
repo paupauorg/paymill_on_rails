@@ -1,3 +1,17 @@
+/.idea/.generators
+/.idea/.name
+/.idea/.rakeTasks
+/.idea/encodings.xml
+/.idea/misc.xml
+/.idea/modules.xml
+/.idea/paymill_on_rails.iml
+/.idea/runConfigurations/Development__paymill_on_rails.xml
+/.idea/runConfigurations/Production__paymill_on_rails.xml
+/.idea/runConfigurations/spec__paymill_on_rails.xml
+/.idea/runConfigurations/test__paymill_on_rails.xml
+/.idea/scopes/scope_settings.xml
+/.idea/vcs.xml
+/.idea/workspace.xml
 .bundle/
 log/*.log
 pkg/
