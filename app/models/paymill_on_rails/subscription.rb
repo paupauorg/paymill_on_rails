@@ -6,18 +6,23 @@ module PaymillOnRails
     # Paymill::Payment.create to get payment,
     # then just payment.id is stored 
     # ( see: https://github.com/dkd/paymill-ruby )
-    attr_accessor :paymill_card_token
+    attr_accessor :paymill_card_token, :company
 
     belongs_to :plan
+    belongs_to :user, class_name: ::User
     validates_presence_of :plan_id
     validates_presence_of :email
+    accepts_nested_attributes_for :user
 
     def save_with_payment
+      self.email = user.email
+      self.name = "#{user.first_name} #{user.last_name}"
+      company = ::Company.create(name: self.company)
+      self.user.company = company
       if valid?
         client = Paymill::Client.create email: email, description: name
         payment = Paymill::Payment.create token: paymill_card_token, client: client.id
         subscription = Paymill::Subscription.create offer: plan.paymill_id, client: client.id, payment: payment.id
-  
         self.paymill_id = subscription.id
         save!
       end

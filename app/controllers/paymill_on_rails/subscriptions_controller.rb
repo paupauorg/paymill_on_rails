@@ -10,6 +10,7 @@ module PaymillOnRails
     def new
       plan = Plan.find(params[:plan_id])
       @subscription = plan.subscriptions.build
+      @subscription.user = User.new
     end
 
     def create
@@ -26,7 +27,9 @@ module PaymillOnRails
       # Only allow a trusted parameter "white list" through with ( see Rails 4 Strong Parameters ).
       def subscription_params
         # specialize this private method with per-user checking of permissible attributes with params.require :
-          params.require(:subscription).permit(:name, :email, :paymill_id, :plan_id, :paymill_card_token)
+          params.require(:subscription).permit(:paymill_id, :plan_id, :paymill_card_token, :company,
+                                               user_attributes: [:first_name, :last_name, :email, :password, :password_confirmation]
+          )
       end
 
       # Use callbacks to share common setup or constraints between actions ( see Rails 4 Strong Parameters ).

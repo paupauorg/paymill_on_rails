@@ -6,6 +6,7 @@ class CreatePaymillOnRailsSubscriptions < ActiveRecord::Migration
       t.string  :email
       t.integer :plan_id
       t.string  :paymill_id
+      t.integer :user_id
 
       t.timestamps
     end
