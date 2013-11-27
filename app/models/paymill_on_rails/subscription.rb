@@ -20,15 +20,22 @@ module PaymillOnRails
       company = ::Company.create(name: self.company)
       self.user.company = company
       if valid?
+        company.build_schema
+        Apartment::Database.switch company.schema
+        ::Import.create_basic_objects
+        self.user.role_id = 13
+        self.user.company_owner = true
         client = Paymill::Client.create email: email, description: name
         payment = Paymill::Payment.create token: paymill_card_token, client: client.id
         subscription = Paymill::Subscription.create offer: plan.paymill_id, client: client.id, payment: payment.id
         self.paymill_id = subscription.id
         save!
+        Apartment::Database.switch
       end
     rescue Paymill::PaymillError => e
       logger.error "Paymill error while creating customer: #{e.message}"
       errors.add :base, "There was a problem with your credit card. Please try again."
+      Apartment::Database.switch
       false
     end
   end
