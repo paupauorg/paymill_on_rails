@@ -19,6 +19,7 @@ module PaymillOnRails
       self.name = "#{user.first_name} #{user.last_name}"
       company = ::Company.create(name: self.company)
       self.user.company = company
+      self.user.role_id = 0
       if valid?
         company.build_schema
         Apartment::Database.switch company.schema
